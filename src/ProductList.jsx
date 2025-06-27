@@ -255,10 +255,6 @@ function ProductList({ onHomeClick }) {
     };
 
     const handleAddToCart = (product) => {
-        if (totalQuantity >= 10) {
-            setCartlimit('You can only add up to 10 items to the cart.');
-            return;
-        }
         dispatch(addItem(product)); // Dispatch the action to add the product to the cart (Redux action)
         setAddedToCart((prevState) => ({ // Update the local state to reflect that the product has been added
           ...prevState, // Spread the previous state to retain existing entries
@@ -316,27 +312,30 @@ function ProductList({ onHomeClick }) {
                         <div>{category.category}</div> {/* Display the category name */}
                         </h1>
                         <div className="product-list"> {/* Container for the list of plant cards */}
-                        {category.plants.map((plant, plantIndex) => ( // Loop through each plant in the current category
-                            <div className="product-card" key={plantIndex}> {/* Unique key for each plant card */}
-                            <img 
-                                className="product-image" 
-                                src={plant.image} // Display the plant image
-                                alt={plant.name} // Alt text for accessibility
-                            />
-                            <div className="product-title">{plant.name}</div> {/* Display plant name */}
-                            {/* Display other plant details like description and cost */}
-                            <div className="product-description">{plant.description}</div> {/* Display plant description */}
-                            <div className="product-cost">${plant.cost}</div> {/* Display plant cost */}
-                            <button
-                                className="product-button"
-                                onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
-                                disabled={addedToCart[plant.name]} // Disable button if already added to cart
-                                style= {addedToCart[plant.name] ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}
-                            >
-                                {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'} {/* Change button text based on whether the plant is added to cart */}
-                            </button>
-                            </div>
-                        ))}
+                        {category.plants.map((plant, plantIndex) => {
+                            const inCart = cart.some(item => item.name === plant.name); // Loop through each plant in the current category
+                            return (
+                                <div className="product-card" key={plantIndex}> {/* Unique key for each plant card */}
+                                <img 
+                                    className="product-image" 
+                                    src={plant.image} // Display the plant image
+                                    alt={plant.name} // Alt text for accessibility
+                                />
+                                <div className="product-title">{plant.name}</div> {/* Display plant name */}
+                                {/* Display other plant details like description and cost */}
+                                <div className="product-description">{plant.description}</div> {/* Display plant description */}
+                                <div className="product-cost">${plant.cost}</div> {/* Display plant cost */}
+                                <button
+                                    className="product-button"
+                                    onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
+                                    disabled={inCart} // Disable button if already added to cart
+                                    style= {inCart ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}
+                                >
+                                    {inCart ? 'Added to Cart' : 'Add to Cart'} {/* Change button text based on cart status */}
+                                </button>
+                                </div>
+                            );
+                        })}
                         </div>
                     </div>
                     ))}

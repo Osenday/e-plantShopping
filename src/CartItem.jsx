@@ -6,8 +6,8 @@ import './CartItem.css';
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
-  const [CheckoutMessage, setCheckoutMessage] = useState('');
-  const closeCheckoutMessage = () => setCheckoutMessage('');
+  //const [CheckoutMessage, setCheckoutMessage] = useState('');
+  //const closeCheckoutMessage = () => setCheckoutMessage('');
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
@@ -21,7 +21,7 @@ const CartItem = ({ onContinueShopping }) => {
    if (onContinueShopping) onContinueShopping();
   };
 
-const handleCheckoutShopping = (e) => {
+const handleCheckoutShopping = () => {
     alert('Functionality to be added for future reference');
 };
 
@@ -69,7 +69,7 @@ const handleCheckoutShopping = (e) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={handleContinueShopping}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1" onClick={}>Checkout</button>
+        <button className="get-started-button1">Checkout</button>
       </div>
     </div>
   );
