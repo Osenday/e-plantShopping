@@ -328,8 +328,10 @@ function ProductList({ onHomeClick }) {
                             <button
                                 className="product-button"
                                 onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
+                                disabled={addedToCart[plant.name]} // Disable button if already added to cart
+                                style= {addedToCart[plant.name] ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}
                             >
-                                Add to Cart
+                                {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'} {/* Change button text based on whether the plant is added to cart */}
                             </button>
                             </div>
                         ))}
