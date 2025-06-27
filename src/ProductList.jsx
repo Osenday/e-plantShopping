@@ -255,8 +255,11 @@ function ProductList({ onHomeClick }) {
     };
 
     const handleAddToCart = (product) => {
+        if (totalQuantity >= 10) {
+            setCartlimit('You can only add up to 10 items to the cart.');
+            return;
+        }
         dispatch(addItem(product)); // Dispatch the action to add the product to the cart (Redux action)
-      
         setAddedToCart((prevState) => ({ // Update the local state to reflect that the product has been added
           ...prevState, // Spread the previous state to retain existing entries
           [product.name]: true, // Set the current product's name as a key with value 'true' to mark it as added
@@ -291,13 +294,12 @@ function ProductList({ onHomeClick }) {
                     {totalQuantity > 0 && (
                         <span style={{
                             position: 'absolute',
-                            top: 0,
-                            right: 0,
-                            background: 'red',
+                            top: '34px',
+                            left: '96.5%',
                             color: 'white',
                             borderRadius: '50%',
                             padding: '2px 8px',
-                            fontSize: '16px',
+                            fontSize: '20px',
                             fontWeight: 'bold'}}
                         >
                         {totalQuantity}
